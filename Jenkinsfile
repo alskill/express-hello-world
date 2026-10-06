@@ -21,9 +21,15 @@ pipeline {
         }
 
         stage('Deploy') {
-            steps {
-                echo 'Deploy stage will be configured next.'
-            }
+    steps {
+        sh '''
+            docker rm -f express-hello-world || true
+            docker run -d \
+                --name express-hello-world \
+                -p 3000:3000 \
+                express-hello-world:latest
+        ''' }
         }
+
     }
 }
